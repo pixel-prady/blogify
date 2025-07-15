@@ -1,6 +1,6 @@
 import { asynchandler } from "../utils/asyncHandler.js";
 import { apiresponse } from "../utils/apiResponse.js";
-import {apierror}  from "../utils/apiError.js"
+import { apierror } from "../utils/apiError.js";
 import { User } from "../models/user.model.js";
 
 // Helper: Generate access & refresh token
@@ -29,24 +29,22 @@ const generateAccessTokenAndRefreshToken = async (userId) => {
 
 // Register Controller
 const register = asynchandler(async (req, res) => {
-    const username = req?.body?.username?.trim();
+    const name = req?.body?.name?.trim();
     const email = req?.body?.email?.trim();
     const password = req?.body?.password?.trim();
 
-    if (!username || !email || !password) {
+    if (!name || !email || !password) {
         throw new apierror(400, "ALL FIELDS ARE REQUIRED");
     }
 
-    const existedUser = await User.findOne({
-        $or: [{ username }, { email }],
-    });
+    const existedUser = await User.findOne({ email });
 
     if (existedUser) {
-        throw new apierror(409, "USER WITH EMAIL OR USERNAME ALREADY EXISTS");
+        throw new apierror(409, "USER WITH EMAIL ALREADY EXISTS");
     }
 
     const user = await User.create({
-        username: username.toLowerCase(),
+        name,
         email,
         password,
     });
@@ -61,7 +59,9 @@ const register = asynchandler(async (req, res) => {
 
     return res
         .status(201)
-        .json(new apiresponse(201, createdUser, "USER REGISTERED SUCCESSFULLY"));
+        .json(
+            new apiresponse(201, createdUser, "USER REGISTERED SUCCESSFULLY")
+        );
 });
 
 // Login Controller
@@ -70,12 +70,10 @@ const login = asynchandler(async (req, res) => {
     const password = req?.body?.password?.trim();
 
     if (!identifier || !password) {
-        throw new apierror(400, "USERNAME/EMAIL AND PASSWORD ARE REQUIRED");
+        throw new apierror(400, "EMAIL AND PASSWORD ARE REQUIRED");
     }
 
-    const user = await User.findOne({
-        $or: [{ username: identifier }, { email: identifier }],
-    });
+    const user = await User.findOne({ email: identifier });
 
     if (!user) {
         throw new apierror(404, "USER DOES NOT EXIST");

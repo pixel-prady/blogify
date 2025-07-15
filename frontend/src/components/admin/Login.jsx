@@ -47,7 +47,7 @@ function Login() {
                         className="mt-6 w-full sm:max-w-md text-gray-600"
                     >
                         <div className="flex flex-col">
-                            <label htmlFor="identifier">Email or Username</label>
+                            <label htmlFor="identifier">Email</label>
                             <input
                                 id="identifier"
                                 type="text"

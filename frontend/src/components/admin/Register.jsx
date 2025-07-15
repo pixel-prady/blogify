@@ -4,7 +4,8 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 function Register() {
-    const [username, setUsername] = useState("");
+
+    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -15,14 +16,14 @@ function Register() {
 
         try {
             const { data } = await axios.post("/api/v1/users/register", {
-                username,
+                name,
                 email,
                 password
             });
 
             if (data.success) {
                 toast.success("Registration Successful! Please log in.");
-                navigate("/login"); 
+                navigate("/login");
             } else {
                 toast.error(data.message || "Registration failed");
             }
@@ -46,14 +47,14 @@ function Register() {
                         className="mt-6 w-full sm:max-w-md text-gray-600"
                     >
                         <div className="flex flex-col">
-                            <label htmlFor="username">Username</label>
+                            <label htmlFor="name">Name</label>
                             <input
-                                id="username"
+                                id="name"
                                 type="text"
                                 required
-                                placeholder="Your username"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
+                                placeholder="Your full name"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
                                 className="border-b-2 border-gray-300 p-2 outline-none mb-6"
                             />
                         </div>

@@ -134,7 +134,7 @@ function Blog() {
                 </h1>
                 <h2 className="my-5 max-w-lg truncate mx-auto">{data.subTitle}</h2>
                 <p className="inline-block py-1 px-4 rounded-full mb-6 border text-sm border-primary/35 bg-primary/5 font-medium text-primary">
-                    Michael Brown
+                    Author : {data.owner?.name || data.owner?.email || "Anonymous"}
                 </p>
             </div>
 
@@ -154,13 +154,14 @@ function Blog() {
                         {comments.map((items, index) => (
                             <div
                                 key={keyId + index}
-                                className="relative bg-primary/2 border border-primary/5 max-w-xl p-4 rounded text-gray-600"
+                                className="relative bg-primary/2 border border-primary/5 max-w-xl p-4 pb-8 rounded text-gray-600"
                             >
                                 <div className="flex items-center gap-2 mb-2">
                                     <img src={assets.user_icon} alt="" className="w-6" />
                                     <p className="font-medium">{items.name}</p>
                                 </div>
                                 <p className="text-sm max-w-md ml-8">{items.comment}</p>
+                                
                                 <div className="absolute right-4 bottom-3 flex items-center gap-2 text-xs">
                                     {Moment(items.createdAt).fromNow()}
                                 </div>

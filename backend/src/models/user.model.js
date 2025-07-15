@@ -4,13 +4,10 @@ import jwt from "jsonwebtoken";
 
 const userSchema = new Schema(
     {
-        username: {
+        name: {
             type: String,
-            required: [true, "USERNAME IS REQUIRED"],
-            unique: true,
-            lowercase: true,
+            required: [true, "NAME IS REQUIRED"],
             trim: true,
-            index: true,
         },
         email: {
             type: String,
@@ -31,13 +28,10 @@ const userSchema = new Schema(
 );
 
 userSchema.pre("save", async function (next) {
-
     if (!this.isModified("password")) return next();
     this.password = await bcrypt.hash(this.password, 10);
     next();
-
 });
-
 
 userSchema.methods.isPasswordCorrect = async function (password) {
     return await bcrypt.compare(password, this.password);
@@ -55,6 +49,7 @@ userSchema.methods.generateAccessToken = function () {
         }
     );
 };
+
 userSchema.methods.generateRefreshToken = function () {
     return jwt.sign(
         {
@@ -66,6 +61,5 @@ userSchema.methods.generateRefreshToken = function () {
         }
     );
 };
-
 
 export const User = mongoose.model("User", userSchema);
