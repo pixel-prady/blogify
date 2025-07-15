@@ -7,18 +7,66 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
+# Dependency directories
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+build/
 *.local
+
+# Vite cache
+.vite/
+.vitepress/
+
+# Environment files
+.env.local
+.env.*.local
+.env
+
+# System Files
+.DS_Store
+Thumbs.db
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-.idea
-.DS_Store
+.idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# macOS metadata files
+.AppleDouble
+.LSOverride
+
+# Linux file metadata
+*~
+
+# Optional: Storybook
+.storybook-out/
+
+# Optional: Testing
+coverage/
+coverage-final.json
+.nyc_output/
+playwright-report/
+test-results/
+
+# Optional: VS Code plugin settings
+.vscode-test/
+
+# Optional: SvelteKit or other frameworks
+.svelte-kit/
+
+# Optional: JetBrains IDEs
+*.iml
+*.iws
+*.ipr
+out/
+
+# Optional: TypeScript cache
+*.tsbuildinfo
