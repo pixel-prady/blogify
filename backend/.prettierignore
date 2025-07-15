@@ -1,0 +1,53 @@
+*.env
+/node_modules
+./dist
+
+
+# Dependency directory
+node_modules/
+
+# Environment variable files
+.env
+.env.*  # includes .env.local, .env.development, etc.
+
+# Build or distribution folders (if you generate any)
+dist/
+build/
+
+# Logs
+logs/
+*.log
+
+# Cache and temp files
+*.tmp
+*.temp
+tmp/
+temp/
+
+# Public/static files (if you serve any static content)
+public/
+
+# Coverage reports (if using Jest or nyc)
+coverage/
+
+# Database files (if any)
+*.sqlite
+*.db
+
+# OS / IDE specific files
+.DS_Store
+.vscode/
+.idea/
+
+# Version control
+.git/
+
+# Prettier config files themselves
+.prettierrc
+.prettierrc.js
+.prettierignore
+
+# Lock files (optional — if you want Prettier to ignore them)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
