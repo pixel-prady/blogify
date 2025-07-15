@@ -15,18 +15,21 @@ app.use(express.urlencoded({ extended: true, limit: "100kb" }));
 app.use(express.static("public"));
 app.use(cookieParser());
 
+// Home test route
+app.get("/", (req, res) => {
+    res.send("API is Working");
+});
 //routes declaration:
 
 import userRouter from "./routes/user.routes.js";
 import blogRouter from "./routes/blog.route.js";
-import adminRouter from "./routes/admin.route.js"
+import adminRouter from "./routes/admin.route.js";
 
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/blog", blogRouter);
-app.use("/api/v1/admin",adminRouter) ; 
+app.use("/api/v1/admin", adminRouter);
 
-
-// Central error handler 
+// Central error handler
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
 
@@ -37,6 +40,5 @@ app.use((err, req, res, next) => {
         stack: process.env.NODE_ENV === "development" ? err.stack : undefined,
     });
 });
-
 
 export { app };
