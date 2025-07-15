@@ -2,10 +2,8 @@ import dotenv from "dotenv";
 import connectDB from "./db/connection.js";
 import {app} from "./app.js"
 import ImageKit from "imagekit";
+
 dotenv.config()
-
-
-
 connectDB()
     .then(() => {
         const server = app.listen(process.env.PORT || 8000, () => {
