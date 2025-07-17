@@ -4,6 +4,7 @@ import { setToken } from "../../store/slices/appSlice";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { useNavigate,Link } from "react-router-dom";
+import api from "../../utils/RefreshAccessToken";
 function Login() {
 
     const [identifier, setIdentifier] = useState("");
@@ -15,7 +16,7 @@ function Login() {
         e.preventDefault();
 
         try {
-            const { data } = await axios.post("/api/v1/users/login", { identifier, password });
+            const { data } = await api.post("/api/v1/users/login", { identifier, password });
 
             if (data.success) {
                 

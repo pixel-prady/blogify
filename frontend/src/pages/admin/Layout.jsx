@@ -6,15 +6,21 @@ import Logo from "../../components/Logo";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../store/slices/appSlice";
 import toast from "react-hot-toast";
+import api from "../../utils/RefreshAccessToken";
 
 function Layout() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const logout = () => {
-		localStorage.removeItem('token')
-		dispatch(setToken(null));
-		toast.success("LOGOUT SUCCESSFUL")
-		navigate('/');
+	const logout = async () => {
+		try {
+			await api.post("api/v1/users/logout");
+			localStorage.removeItem('token')
+			dispatch(setToken(null));
+			toast.success("LOGOUT SUCCESSFUL")
+			navigate('/');
+		} catch (error) {
+			toast.error(error.response?.data?.message || error.message);
+		}
 	}
 	return (
 		<>

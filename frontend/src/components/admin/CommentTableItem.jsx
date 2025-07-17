@@ -2,6 +2,7 @@ import React from 'react'
 import { assets } from '../../assets/assets'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import api from '../../utils/RefreshAccessToken'
 
 function CommentTableItem({ comment, fetchComments }) {
     const { blog, createdAt, _id } = comment
@@ -9,7 +10,7 @@ function CommentTableItem({ comment, fetchComments }) {
 
     const approveComment = async () => {
         try {
-            const { data } = await axios.post(`/api/v1/admin/approve-comment`, { id: _id })
+            const { data } = await api.post(`/api/v1/admin/approve-comment`, { id: _id })
             if (data.success) {
                 toast.success(data.message);
                 fetchComments();
@@ -26,7 +27,7 @@ function CommentTableItem({ comment, fetchComments }) {
         try {
             const confirm = window.confirm("Are you sure to delete this comment")
             if (!confirm) return;
-            const { data } = await axios.post(`/api/v1/admin/delete-comment`, { id: _id })
+            const { data } = await api.post(`/api/v1/admin/delete-comment`, { id: _id })
             if (data.success) {
                 toast.success(data.message);
                 fetchComments();

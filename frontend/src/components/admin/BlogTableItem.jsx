@@ -4,6 +4,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { fetchBlogs as updater } from '../../store/slices/appSlice';
 import { useDispatch } from 'react-redux';
+import api from '../../utils/RefreshAccessToken';
 
 function BlogTableItem({
     blog,
@@ -19,7 +20,7 @@ function BlogTableItem({
         const confirm = window.confirm('Are you sure you want to delete this blog ')
         if (!confirm) return;
         try {
-            const { data } = await axios.post("api/v1/blog/delete", { id: blog._id })
+            const { data } = await api.post("api/v1/blog/delete", { id: blog._id })
 
             if (data.success) {
                 toast.success(data.message)
@@ -37,7 +38,7 @@ function BlogTableItem({
 
     const togglePublish = async () => {
         try {
-            const { data } = await axios.post('/api/v1/blog/toggle-publish', { id: blog._id })
+            const { data } = await api.post('/api/v1/blog/toggle-publish', { id: blog._id })
             if (data.success) {
                 toast.success(data.message)
                 await fetchBlogs();

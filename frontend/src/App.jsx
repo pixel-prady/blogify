@@ -25,7 +25,7 @@ function App() {
         const token = localStorage.getItem("token");
 
         if (token && token !== "undefined" && token !== "null") {
-            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+            // axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
             dispatch(setToken(token));
         } else {
             localStorage.removeItem("token");

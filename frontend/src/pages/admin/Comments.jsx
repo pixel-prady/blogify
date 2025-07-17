@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import CommentTableItem from '../../components/admin/CommentTableItem'
 import toast from 'react-hot-toast'
 import axios from 'axios'
+import api from '../../utils/RefreshAccessToken'
 function Comments() {
 
     const [comments, setComments] = useState([])
@@ -10,7 +11,7 @@ function Comments() {
 
     const fetchComments = async () => {
        	try {
-			const { data } = await axios.get(`/api/v1/admin/comments`)
+			const { data } = await api.get(`/api/v1/admin/comments`)
 			// console.log ( data.data) ;
 			data.success ? setComments(data.data) : toast.error(data.message)
 		} catch (error) {

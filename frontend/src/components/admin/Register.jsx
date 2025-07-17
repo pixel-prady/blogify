@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import api from "../../utils/RefreshAccessToken";
 
 function Register() {
 
@@ -15,7 +16,7 @@ function Register() {
         e.preventDefault();
 
         try {
-            const { data } = await axios.post("/api/v1/users/register", {
+            const { data } = await api.post("/api/v1/users/register", {
                 name,
                 email,
                 password

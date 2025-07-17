@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react'
 import BlogTableItem from '../../components/admin/BlogTableItem'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import api from '../../utils/RefreshAccessToken'
 
 
 function Listblog() {
 	const [blog, setBlog] = useState([])
 	const fetchBlogs = async () => {
 		try {
-			const { data } = await axios.get('/api/v1/admin/blogs');
+			const { data } = await api.get('/api/v1/admin/blogs');
 			if (data.success) {
 				setBlog(data.data)
 			}

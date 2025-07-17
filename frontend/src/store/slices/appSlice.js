@@ -34,9 +34,9 @@ const appSlice = createSlice({
 	reducers: {
 		setToken(state, action) {
 			state.token = action.payload;
-			axios.defaults.headers.common[
-				"Authorization"
-			] = `Bearer ${action.payload}`; 
+			// axios.defaults.headers.common[
+			// 	"Authorization"
+			// ] = `Bearer ${action.payload}`;
 			localStorage.setItem("token", action.payload);
 		},
 		clearToken(state) {

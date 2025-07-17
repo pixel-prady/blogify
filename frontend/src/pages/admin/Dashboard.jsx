@@ -3,6 +3,7 @@ import BlogTableItem from "../../components/admin/BlogTableItem";
 import { assets } from "../../assets/assets";
 import axios from "axios";
 import toast from "react-hot-toast";
+import api from "../../utils/RefreshAccessToken";
 
 function Dashboard() {
 	const [dashboardData, setDashboardData] = useState({
@@ -14,7 +15,7 @@ function Dashboard() {
 
 	const fetchDashboard = async () => {
 		try {
-			const { data } = await axios.get(`/api/v1/admin/dashboard`)
+			const { data } = await api.get(`/api/v1/admin/dashboard`)
 			console.log ( data.data) ;
 			data.success ? setDashboardData(data.data) : toast.error(data.message)
 		} catch (error) {

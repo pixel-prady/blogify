@@ -7,6 +7,7 @@ import axios from 'axios'
 import { parse } from 'marked'
 import { useDispatch } from 'react-redux'
 import { fetchBlogs } from '../../store/slices/appSlice'
+import api from '../../utils/RefreshAccessToken'
 
 function Addblog() {
     const keyId = useId()
@@ -40,7 +41,7 @@ function Addblog() {
             formData.append("blog", JSON.stringify(blog))
             formData.append("image", image)
 
-            const { data } = await axios.post("api/v1/blog/addBlog", formData);
+            const { data } = await api.post("api/v1/blog/addBlog", formData);
 
             if (data.success) {
                 toast.success(data.message);
@@ -63,7 +64,7 @@ function Addblog() {
         if (!title) return toast.error("Please enter the Title ")
         try {
             setLoading(true)
-            const { data } = await axios.post('/api/v1/blog/generate', { prompt: title })
+            const { data } = await api.post('/api/v1/blog/generate', { prompt: title })
             if (data.success) {
                 quillRef.current.root.innerHTML = parse(data.data);
             } else {

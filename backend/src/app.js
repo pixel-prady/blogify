@@ -24,10 +24,12 @@ app.get("/", (req, res) => {
 import userRouter from "./routes/user.routes.js";
 import blogRouter from "./routes/blog.route.js";
 import adminRouter from "./routes/admin.route.js";
+import authRouter from "./routes/auth.route.js"; 
 
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/blog", blogRouter);
 app.use("/api/v1/admin", adminRouter);
+app.use("/api/v1/token",authRouter)
 
 // Central error handler
 app.use((err, req, res, next) => {
