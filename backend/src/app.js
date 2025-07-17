@@ -3,6 +3,8 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 const app = express();
 
+app.use(cookieParser());
+
 app.use(
     cors({
         origin: process.env.CORS_ORIGIN,
@@ -13,7 +15,6 @@ app.use(
 app.use(express.json({ limit: "100kb" }));
 app.use(express.urlencoded({ extended: true, limit: "100kb" }));
 app.use(express.static("public"));
-app.use(cookieParser());
 
 // Home test route
 app.get("/", (req, res) => {
@@ -24,12 +25,12 @@ app.get("/", (req, res) => {
 import userRouter from "./routes/user.routes.js";
 import blogRouter from "./routes/blog.route.js";
 import adminRouter from "./routes/admin.route.js";
-import authRouter from "./routes/auth.route.js"; 
+import authRouter from "./routes/auth.route.js";
 
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/blog", blogRouter);
 app.use("/api/v1/admin", adminRouter);
-app.use("/api/v1/token",authRouter)
+app.use("/api/v1/token", authRouter);
 
 // Central error handler
 app.use((err, req, res, next) => {

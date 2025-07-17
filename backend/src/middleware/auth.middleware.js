@@ -2,11 +2,13 @@ import { apierror } from "../utils/apiError.js";
 import { asynchandler } from "../utils/asyncHandler.js";
 import jwt from "jsonwebtoken";
 import { User } from "../models/user.model.js";
-
 const verifyJWT = asynchandler(async (req, _, next) => {
     try {
         const authHeader = req.header("Authorization") || "";
-        const token = req.cookies?.accessToken || authHeader.split(" ")[1];
+        const token =
+            authHeader.startsWith("Bearer ")
+                ? authHeader.split(" ")[1]
+                : req.cookies?.accessToken;
 
         if (!token) {
             throw new apierror(401, "Unauthorized request");
@@ -30,4 +32,5 @@ const verifyJWT = asynchandler(async (req, _, next) => {
 });
 
 
-export default verifyJWT ; 
+
+export default verifyJWT; 

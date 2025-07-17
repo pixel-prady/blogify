@@ -5,24 +5,29 @@ import { apierror } from "../utils/apiError.js";
 import { asynchandler } from "../utils/asyncHandler.js";
 
 
-const router = express.Router() ; 
+const router = express.Router();
 
 router.get(
     "/refresh",
     asynchandler(async (req, res) => {
         const refreshToken = req.cookies?.refreshToken;
+        
+        // console.log("🔁 Refresh token route hit", refreshToken);
 
-        if (!refreshToken) 
+        if (!refreshToken) {
             throw new apierror(401, "Refresh token missing login !!");
+        }
 
         const user = await User.findOne({ refreshToken });
-        if (!user) throw new apierror(403, "Invalid refresh token please Login !!");
+        if (!user) {
+            throw new apierror(403, "Invalid refresh token please Login !!");
+        }
 
-        const isValid = jwt.verify(
-            refreshToken,
-            process.env.REFRESH_TOKEN_SECRET
-        );
-        if (!isValid) throw new apierror(403, "Refresh token expired Login !!");
+        try {
+            jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+        } catch (err) {
+            throw new apierror(403, "Refresh token expired Login !!");
+        }
 
         const newAccessToken = user.generateAccessToken();
 

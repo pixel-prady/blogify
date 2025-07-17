@@ -25,25 +25,23 @@ api.interceptors.request.use(
     },
     (error) => Promise.reject(error)
 );
-
 api.interceptors.response.use(
     (response) => response,
     async (error) => {
         const originalRequest = error.config;
 
-        if (error.response?.status === 401 && !originalRequest._retry) {
-            // console.log("Interceptor caught 401, trying refresh");
-
+        if (
+            error.response?.status === 401 &&
+            !originalRequest._retry &&
+            !originalRequest.url.includes("/login") &&
+            !originalRequest.url.includes("/register")
+        ) {
             originalRequest._retry = true;
-
             try {
                 const { data } = await refreshApi.get("/api/v1/token/refresh");
-                // console.log("Refresh response data:", data);
-
                 if (data?.accessToken) {
                     store.dispatch(setToken(data.accessToken));
                     originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
-                    console.log("Retrying with new access token:", data.accessToken);
                     return api(originalRequest);
                 } else {
                     store.dispatch(clearToken());
@@ -51,15 +49,19 @@ api.interceptors.response.use(
                     return Promise.reject(error);
                 }
             } catch (refreshError) {
-                console.error("Refresh token error:", refreshError);
                 store.dispatch(clearToken());
                 toast.error("Session expired. Please login again.");
                 return Promise.reject(refreshError);
             }
         }
 
+        if (!error.response) {
+            toast.error("Network error. Please check your connection.");
+        }
+
         return Promise.reject(error);
     }
 );
+
 
 export default api;

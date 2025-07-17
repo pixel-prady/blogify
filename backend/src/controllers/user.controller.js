@@ -93,8 +93,8 @@ const login = asynchandler(async (req, res) => {
 
     const options = {
         httpOnly: true,
-        secure: true,
-        sameSite: "strict",
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
     };
 
     return res
@@ -134,13 +134,14 @@ const logout = asynchandler(async (req, res) => {
     return res
         .clearCookie("accessToken", {
             httpOnly: true,
-            secure: true,
-            sameSite: "strict",
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+
         })
         .clearCookie("refreshToken", {
             httpOnly: true,
-            secure: true,
-            sameSite: "strict",
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
         })
         .status(200)
         .json(new apiresponse(200, {}, "USER LOGGED OUT SUCCESSFULLY"));
