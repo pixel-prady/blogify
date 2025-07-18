@@ -72,7 +72,7 @@ A modern, full-stack blogging platform with rich text editing, syntax highlighti
 ```bash
 backend
 ├── public
-│   └── temp ( for storing the image uploaded on local server )
+│   └── temp ( for storing the image uploaded on server )
 └── src
     ├── app.js
     ├── constants.js
