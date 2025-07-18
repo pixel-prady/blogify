@@ -1,5 +1,5 @@
 import React, { useEffect, useId, useState } from "react";
-// import 'highlight.js/styles/purebasic.css' 
+// import 'highlight.js/styles/googlecode.css' 
 import hljs from "highlight.js";
 import { useParams } from "react-router-dom";
 import NavBar from "../components/NavBar";
