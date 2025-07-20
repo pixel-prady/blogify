@@ -63,9 +63,9 @@
   color: #c7254e;
 }
 
-.rich-text .hljs {
+/* .rich-text .hljs {
   background: none;
-}
+} */
 
 
 
@@ -88,12 +88,12 @@
   background: none;
 }
 
-.code-block-wrapper .hljs {
+/* .code-block-wrapper .hljs {
   background: none !important;
   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace !important;
   font-size: 14px !important;
   line-height: 1.6 !important;
   color: #2d2d2d !important;
   padding: 0 !important;
-}
+} */
 
