@@ -66,7 +66,9 @@ function Addblog() {
             setLoading(true)
             const { data } = await api.post('/api/v1/blog/generate', { prompt: title })
             if (data.success) {
-                quillRef.current.root.innerHTML = parse(data.data);
+                // console.log(data.data)
+                // quillRef.current.root.innerHTML = parse(data.data);
+                quillRef.current.clipboard.dangerouslyPasteHTML(parse(data.data));
             } else {
                 toast.error(data.message);
             }

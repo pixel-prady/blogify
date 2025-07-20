@@ -1,5 +1,4 @@
-import React, { useEffect, useId, useState } from "react";
-// import 'highlight.js/styles/googlecode.css' 
+import React, { useEffect, useId, useState ,useLayoutEffect} from "react";
 import hljs from "highlight.js";
 import { useParams } from "react-router-dom";
 import NavBar from "../components/NavBar";
@@ -68,51 +67,44 @@ function Blog() {
         fetchBlogData();
         fetchComments();
     }, []);
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (!data) return;
 
-        const timeout = setTimeout(() => {
-            const container = document.querySelector(".rich-text");
-            if (!container) return;
+        const container = document.querySelector(".rich-text");
+        if (!container) return;
 
-            const containers = container.querySelectorAll(".ql-code-block-container");
+        const containers = container.querySelectorAll(".ql-code-block-container");
 
-            containers.forEach((blockContainer) => {
-                const codeLines = blockContainer.querySelectorAll(".ql-code-block");
-                if (!codeLines.length) return;
+        containers.forEach((blockContainer) => {
+            const codeLines = blockContainer.querySelectorAll(".ql-code-block");
+            if (!codeLines.length) return;
 
-                const wrapper = document.createElement("div");
-                wrapper.className = "code-block-wrapper";
+            const wrapper = document.createElement("div");
+            wrapper.className = "code-block-wrapper";
 
-                const pre = document.createElement("pre");
-                const code = document.createElement("code");
+            const pre = document.createElement("pre");
+            const code = document.createElement("code");
 
+            const language = codeLines[0].getAttribute("data-language");
+            if (language && language !== "plaintext") {
+                code.className = `language-${language}`;
+            }
 
-                const language = codeLines[0].getAttribute("data-language");
-
-
-                if (language && language !== "plaintext") {
-                    code.className = `language-${language}`;
-                }
-
-                let innerHTML = "";
-                codeLines.forEach((line) => {
-                    innerHTML += line.innerHTML + "\n";
-                });
-
-                code.innerHTML = innerHTML;
-
-                pre.appendChild(code);
-                wrapper.appendChild(pre);
-
-                blockContainer.replaceWith(wrapper);
+            let innerHTML = "";
+            codeLines.forEach((line) => {
+                innerHTML += line.innerHTML + "\n";
             });
 
-            hljs.highlightAll();
-        }, 0);
+            code.innerHTML = innerHTML;
+            pre.appendChild(code);
+            wrapper.appendChild(pre);
 
-        return () => clearTimeout(timeout);
-    }, [data]);;
+            blockContainer.replaceWith(wrapper);
+
+            hljs.highlightElement(code);
+        });
+    }, [data]);
+
 
 
     return data ? (
@@ -161,7 +153,7 @@ function Blog() {
                                     <p className="font-medium">{items.name}</p>
                                 </div>
                                 <p className="text-sm max-w-md ml-8">{items.comment}</p>
-                                
+
                                 <div className="absolute right-4 bottom-3 flex items-center gap-2 text-xs">
                                     {Moment(items.createdAt).fromNow()}
                                 </div>
